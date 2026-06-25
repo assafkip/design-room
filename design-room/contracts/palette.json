@@ -1,0 +1,17 @@
+{
+  "name": "palette",
+  "target_file": "references/build-palette.md",
+  "_doc": "Asserts the live build-palette.md carries a last-refreshed date (maintained by design_room_pulse.py). The companion guarantee — the per-run flow does ZERO web research — is asserted by design_room_pulse.py --selftest against the live SKILL.md (no WebSearch/WebFetch + a Modernity section), since a contract has a single target_file.",
+  "assertions": [
+    {
+      "kind": "present",
+      "patterns": ["(?i)last[ -]refreshed:?\\s*\\d{4}-\\d{2}-\\d{2}"],
+      "reason": "the palette must carry a machine-readable last-refreshed date so staleness is visible"
+    },
+    {
+      "kind": "absent",
+      "patterns": ["(?i)\\bTODO\\b", "(?i)\\bTBD\\b"],
+      "reason": "no stub markers in the shipped palette"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "canon",
+  "target_file": "references/attention-canon.md",
+  "_doc": "Asserts the live attention-canon.md codifies every principle the cited lenses depend on, each with a real source and a testable rule. The registry_ids_present assertion pulls EVERY canon_ref from every cited lens in lens-registry.json and requires each to appear here — so a cited lens can never reference a principle the canon doesn't define.",
+  "assertions": [
+    {
+      "kind": "registry_ids_present",
+      "registry": "lens-registry.json",
+      "json_path": "lenses[].canon_refs[]",
+      "reason": "every canon_ref named by a cited lens must be defined in attention-canon.md"
+    },
+    {
+      "kind": "present",
+      "patterns": [
+        "(?i)Lindgaard",
+        "2006",
+        "(?i)Fitts",
+        "(?i)Hick",
+        "(?i)Von Restorff",
+        "(?i)Nielsen",
+        "(?i)Krug",
+        "(?i)Kurosu",
+        "\\*\\*Source:\\*\\*",
+        "(?i)\\*\\*Testable rule:\\*\\*"
+      ],
+      "reason": "each principle must carry a real citation (named author/year) and an explicit testable rule"
+    },
+    {
+      "kind": "absent",
+      "patterns": ["(?i)\\bTODO\\b", "(?i)\\bTBD\\b", "\\{\\{"],
+      "reason": "no placeholders — the canon must be complete, not stubbed"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "_doc": "Offline fixture for design_room_pulse.py --selftest. One candidate per evaluate branch: a clean promote, a trend-noise reject, a too-niche reject, a duplicate of a palette repo (lenis), and a no-category reject. Deterministic; no network.",
+  "candidates": [
+    {"repo": "google-labs-code/design.md", "stars": 18600, "category": "spec", "trend_noise": false},
+    {"repo": "hypelab/liquid-everything-2026", "stars": 5200, "category": "shaders", "trend_noise": true},
+    {"repo": "tiny/obscure-widget", "stars": 120, "category": "components", "trend_noise": false},
+    {"repo": "darkroomengineering/lenis", "stars": 14000, "category": "scroll", "trend_noise": false},
+    {"repo": "x/uncategorized-thing", "stars": 3000, "category": "", "trend_noise": false}
+  ]
+}

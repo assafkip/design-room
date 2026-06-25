@@ -1,0 +1,26 @@
+{
+  "name": "grounded",
+  "target_file": "SKILL.md",
+  "_doc": "Asserts the live SKILL.md carries the grounded-mode phase that enforces 'Claude assembles, the founder decides': no originated tokens, no originated copy, every open choice a fork, synthesis assembles never originates. The token-source format itself is enforced by check_token_provenance.py.",
+  "assertions": [
+    {
+      "kind": "present",
+      "section": "## Grounded mode (Claude assembles, the founder decides)",
+      "patterns": [
+        "(?i)No originated tokens",
+        "(?i)No originated copy",
+        "(?i)forced-choice fork",
+        "(?i)assembles,?\\s+never originates"
+      ],
+      "reason": "the grounded-mode phase must state all four no-originate rules"
+    },
+    {
+      "kind": "present",
+      "patterns": [
+        "(?i)carries a `?source",
+        "(?i)Claude may not (originate|invent)"
+      ],
+      "reason": "SKILL.md must require a source per token and forbid Claude originating one"
+    }
+  ]
+}

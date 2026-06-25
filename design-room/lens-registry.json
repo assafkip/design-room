@@ -1,0 +1,75 @@
+{
+  "_doc": "The 7 codified review lenses that replace the 14 design-room personas (a deliberate cut from an earlier multi-persona-debate design — see README). A lens may ONLY emit one of: a cited-principle check, a forced-choice fork for the founder, a fact-check against grounding, or a hand-off to the reactive anti-AI gate. A lens may NEVER originate a token/color/font/copy line, and NEVER resolve its own fork. verify_design_room.py asserts the live SKILL.md references every lens id and carries no persona-debate language.",
+  "version": 1,
+  "source_values": {
+    "cited": "emits 'principle X (canon) implies testable rule Y; the page does/doesn't' — must list canon_refs",
+    "fork": "emits a forced-choice the FOUNDER resolves; the lens never picks",
+    "grounded": "emits a fact-check of the page against grounding/ tokens; never invents the fact",
+    "gate": "hands off to the reactive anti-AI gate (eyeball + impeccable); originates nothing"
+  },
+  "lenses": [
+    {
+      "id": "first-impression",
+      "name": "First-impression / scan",
+      "replaces": ["8-second-evaluator"],
+      "source": "cited",
+      "canon_refs": ["lindgaard-2006-50ms", "fz-scan-pattern", "visual-hierarchy"],
+      "emits": "Whether the page survives a 50ms / first-3-second scan: is the primary action and the what-is-this reachable on the F or Z path in the first screen.",
+      "may_not": "originate the layout; decide what the primary action should be"
+    },
+    {
+      "id": "conversion-usability",
+      "name": "Conversion & usability",
+      "replaces": ["ux-researcher"],
+      "source": "cited",
+      "canon_refs": ["krug-dont-make-me-think", "nielsen-heuristics", "fitts-law", "hicks-law"],
+      "emits": "Whether interaction cost is minimised: target sizes (Fitts), choice count (Hick), self-evidence (Krug), heuristic violations (Nielsen).",
+      "may_not": "originate copy; assert a conversion number without a canon citation"
+    },
+    {
+      "id": "decision-psychology",
+      "name": "Decision psychology",
+      "replaces": ["buyer-psychologist"],
+      "source": "cited",
+      "canon_refs": ["aesthetic-usability", "recognition-over-recall"],
+      "emits": "Whether the page lets a stressed buyer recognise their situation and act, and whether perceived polish is buying trust it must then honour (aesthetic-usability).",
+      "may_not": "name the buyer's pain for them; originate the emotional framing"
+    },
+    {
+      "id": "positioning-retell",
+      "name": "Positioning / retell",
+      "replaces": ["vc-retell-test"],
+      "source": "fork",
+      "canon_refs": [],
+      "emits": "A forced-choice: of N candidate one-sentence retells (each drawn from grounding/positioning), which is the page's spine? Founder picks.",
+      "may_not": "pick the retell; write a new positioning the founder did not supply"
+    },
+    {
+      "id": "technical-accuracy",
+      "name": "Technical accuracy",
+      "replaces": ["domain-expert", "tech-lead"],
+      "source": "grounded",
+      "canon_refs": [],
+      "emits": "A fact-check: every technical claim, code sample, tool screenshot on the page matches a grounding source; flags any that don't.",
+      "may_not": "invent the correct value; pass a claim with no grounding source"
+    },
+    {
+      "id": "boldness-feasibility",
+      "name": "Visual boldness vs feasibility",
+      "replaces": ["visual-designer", "web-implementer"],
+      "source": "fork",
+      "canon_refs": ["von-restorff"],
+      "emits": "A forced-choice per section: salience/boldness (Von Restorff: the ONE thing that breaks the pattern) vs scan-speed + performance budget (LCP < 2.5s). Founder picks where to spend boldness.",
+      "may_not": "pick the bold element; choose the palette or font itself"
+    },
+    {
+      "id": "anti-slop",
+      "name": "Anti-slop / specificity",
+      "replaces": ["specificity-critic", "audience-instinct"],
+      "source": "gate",
+      "canon_refs": [],
+      "emits": "Hand-off to the reactive anti-AI gate (eyeball scan + impeccable detectors): generic copy, convergent fonts, gradient-text, emoji icons, 'describe the situation, do not name the feeling'.",
+      "may_not": "originate copy; act as a fork — it is a gate, not a chooser"
+    }
+  ]
+}

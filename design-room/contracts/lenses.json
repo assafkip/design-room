@@ -1,0 +1,29 @@
+{
+  "name": "lenses",
+  "target_file": "SKILL.md",
+  "_doc": "Asserts the live SKILL.md is built on the 7 codified lenses and carries no 14-persona-debate language.",
+  "assertions": [
+    {
+      "kind": "registry_ids_present",
+      "registry": "lens-registry.json",
+      "json_path": "lenses[].id",
+      "reason": "SKILL.md must reference every lens id from lens-registry.json"
+    },
+    {
+      "kind": "present",
+      "patterns": ["(?i)##\\s+Lenses", "(?i)Claude assembles", "(?i)founder decides"],
+      "reason": "the lenses model + the assemble-not-decide rule must be stated"
+    },
+    {
+      "kind": "absent",
+      "patterns": [
+        "14 specialized personas",
+        "14 agents",
+        "(?i)research,?\\s+debate,?\\s+and converge",
+        "(?i)persona brain file",
+        "(?i)spin up .{0,20}personas"
+      ],
+      "reason": "the old persona-debate model must be gone (no 14 personas, no debate-and-converge)"
+    }
+  ]
+}

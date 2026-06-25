@@ -1,0 +1,17 @@
+{
+  "name": "decisions",
+  "target_file": "SKILL.md",
+  "_doc": "Asserts the live SKILL.md wires the compounding decision ledger: decisions.md in the File Structure, read at load, appended at synthesis via the deterministic appender, and a 'Decisions compound — append-only' Critical Rule. The entry FORMAT is enforced separately by check_decision_log.py.",
+  "assertions": [
+    {
+      "kind": "present",
+      "patterns": [
+        "(?i)decisions\\.md",
+        "(?i)Decisions compound",
+        "(?i)append-only",
+        "(?i)check_decision_log\\.py append"
+      ],
+      "reason": "the ledger must be in the File Structure, carry the compound/append-only rule, and be appended via the deterministic appender"
+    }
+  ]
+}
