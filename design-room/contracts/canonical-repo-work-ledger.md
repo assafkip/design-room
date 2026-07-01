@@ -1140,15 +1140,142 @@ Remaining work:
 
 - None unless founder identifies a renamed repo.
 
+## assafkip/claude-say
+
+Repository:
+
+- GitHub: `https://github.com/assafkip/claude-say`
+- Visibility: public
+- Default branch: `main`
+- Local inspection path: `/Users/assafkipnis/projects/_codex-worktrees/claude-say-inspect`
+- Description: `/say` slash command for Claude Code using OpenAI TTS, manual playback, setup flow, and over-SSH playback.
+
+Decision:
+
+- Founder skipped this repo as a standalone repo pass.
+- It was still used as the comparison source for `assafkip/claude-voice`.
+- Treat this as the current baked fleet operation for the voice command.
+
+Current operation:
+
+- Claude Code plugin shape:
+  - `.claude-plugin/plugin.json`
+  - `.claude-plugin/marketplace.json`
+  - `commands/say.md`
+- Manual `/say` flow:
+  - Synthesize prior assistant prose response.
+  - Write stable mp3 to `~/.config/claude-say/say-last.mp3`.
+  - Print play command.
+  - Do not auto-play from Claude.
+- Secure setup:
+  - `scripts/say-setup.sh`
+  - Hidden prompt in user terminal.
+  - Optional OpenAI `/v1/models` key verification.
+  - Writes key file with `600` permissions.
+- Playback helper:
+  - `scripts/say-play.sh`
+  - Local mpv playback.
+  - Remote pull over SSH.
+- Tests:
+  - `scripts/test/test-say-args.sh`
+  - `scripts/test/test-say-setup.sh`
+
+Changes made:
+
+- None to `assafkip/claude-say`.
+
+Verification:
+
+- `python3 -m py_compile scripts/say-last-response.py` passed.
+- `python3 scripts/say-last-response.py --help` passed.
+- Unknown arg smoke returned code `1`, printed an unrecognized-argument message, and did not hit synthesis.
+- Setup smoke wrote `~/.config/claude-say/openai-key` inside a fake home with content preserved and permission `600`.
+- No Reddit, RSS, GTM, Apify, social collector, schedule, cron, or workflow surface found.
+
+Remaining work:
+
+- None unless founder wants to modify the current baked operation.
+
+## assafkip/claude-voice
+
+Repository:
+
+- GitHub: `https://github.com/assafkip/claude-voice`
+- Visibility: public
+- Default branch: `main`
+- Local inspection path: `/Users/assafkipnis/projects/_codex-worktrees/claude-voice-inspect`
+- Latest inspected commit: `a614ab5` - `Add claudedaddy funnel footer`
+- Description: empty on GitHub.
+- Topics: accessibility, claude, claude-code, openai-tts, slash-command, text-to-speech, tts.
+
+GitHub state:
+
+- Open PRs: none.
+- Open issues: none.
+
+Repo role:
+
+- This is not a Reddit, RSS, GTM, or social aggregator repo.
+- It is an older `/say` command implementation for Claude Code.
+- It overlaps directly with `assafkip/claude-say`.
+
+Freshness findings:
+
+- `claude-voice` is not aligned with the current baked fleet operation.
+- It uses the older project-local install model:
+  - `.claude/commands/say.md`
+  - `scripts/say-last-response.py`
+  - README curl-copy install instructions.
+- It uses the older config namespace:
+  - `~/.config/claude-voice/openai-key`
+  - `~/.config/claude-voice/say-last.mp3`
+  - `SAY_TTS_MODEL`
+  - `SAY_TTS_VOICE`
+- It still auto-plays from Claude by opening a Terminal window on macOS when possible.
+- It has no plugin metadata, no setup script, no playback helper, and no tests.
+- `claude-say` is the baked version now:
+  - plugin install
+  - secure key setup
+  - manual play command
+  - `CLAUDE_SAY_*` env vars
+  - `~/.config/claude-say`
+  - regression smoke for unknown args before paid API calls
+
+Decision:
+
+- Do not treat `claude-voice` as fully baked.
+- It needs a founder decision before code changes because there are three plausible cleanup paths.
+
+Cleanup options:
+
+- Option 1: archive or deprecate `claude-voice` and point users to `claude-say`.
+- Option 2: convert `claude-voice` into a thin redirect repo with README, no runnable duplicate implementation.
+- Option 3: port the full `claude-say` operation into `claude-voice`, keeping the old repo name but replacing the internals.
+
+Changes made:
+
+- None to `assafkip/claude-voice`.
+
+Verification:
+
+- `python3 -m py_compile scripts/say-last-response.py` passed.
+- `python3 scripts/say-last-response.py --help` passed.
+- No Reddit, RSS, GTM, Apify, social collector, schedule, cron, or workflow surface found.
+
+Remaining work:
+
+- Founder decision on Option 1, Option 2, or Option 3.
+- After decision, create a scoped branch and PR.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/compute-gardening`
+- `assafkip/claude-voice`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/claude-say`
+- `assafkip/eyeball`
 
 Current global open loop:
 
@@ -1208,10 +1335,12 @@ Current global open loop:
 - `prd-os`: PR `#1` pytest passed, 247 passed, 2 skipped.
 - `prd-os`: PR `#1` init, build, and map status smoke passed.
 - `compute-gardening`: GitHub repo, PR, and issue lookups failed with repository not found.
+- `claude-say`: Python compile passed, help smoke passed, unknown arg guard smoke passed, setup key-permission smoke passed.
+- `claude-voice`: Python compile passed and help smoke passed.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/claude-say`.
+- Resolve `assafkip/claude-voice` cleanup decision.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
