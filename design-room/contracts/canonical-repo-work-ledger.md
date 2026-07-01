@@ -515,15 +515,66 @@ Remaining work:
 
 - None for this RSS/social/GTM/Reddit pass.
 
+## Repo: assafkip/Pure-spectrum-Q
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/Pure-spectrum-Q-inspect`
+
+What it does:
+
+- Private PureSpectrum Q-system engagement repo.
+- Contains QEP project notes, PureSpectrum deliverables, Q-system skeleton files, marketing templates, and PRD/archive trails.
+
+GitHub state seen:
+
+- Private repo.
+- Default branch: `main`.
+- Open PR `#1`: `prd-os: QEP ticket-upload PRD + 3 issue specs + progress`.
+- PR `#1` is mergeable and very large, about 66,415 additions and 495 deletions at inspection time.
+- No open issues.
+- No GitHub Actions runs were exposed by `gh run list`.
+- Latest pushed commit seen in shallow clone: `9f16ec1` - QEP V1.5 webapp shipped: FastAPI + vanilla JS, full agent parity, demo-ready UI
+
+Aggregator scan:
+
+- Searched for Reddit, RSS, LinkedIn, Twitter, X, social, GTM, feed, Apify, PullPush, Arctic, workflow dispatch, schedule, and cron markers.
+- Full-text scan found many marketing templates and Q-system docs mentioning Reddit, LinkedIn, X, RSS, and schedules.
+- Executable-file scan did not find a live Reddit or RSS collector path.
+- No Arctic or PullPush code path was found on `main`.
+
+Decision:
+
+- No Reddit migration needed on the inspected `main` checkout.
+- No schedule pause needed.
+- Open PR `#1` should be treated separately as a broad PRD/archive trail, not part of the Reddit migration.
+
+Changes made:
+
+- None.
+
+Verification:
+
+- Executable scan:
+  - `rg -n "reddit|rss|linkedin|twitter|x\\.com|social|gtm|feed|apify|pullpush|arctic|workflow_dispatch|schedule:|cron" -S -g '*.py' -g '*.sh' -g '*.js' -g '*.ts' -g '*.yml' -g '*.yaml' .`
+- Result:
+  - Only design/template/helper references matched.
+  - No collector migration target found.
+
+Remaining work:
+
+- Decide separately whether to review or merge PR `#1`.
+- None for this RSS/social/GTM/Reddit pass.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/interview-coach`
+- `assafkip/Pure-spectrum-Q`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/Pure-spectrum-Q`
+- `assafkip/kipi-accountant`
 
 Current global open loop:
 
@@ -565,7 +616,7 @@ Current global open loop:
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/Pure-spectrum-Q`.
+- Inspect `assafkip/kipi-accountant`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
