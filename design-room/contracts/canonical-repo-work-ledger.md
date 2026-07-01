@@ -695,15 +695,83 @@ Remaining work:
 
 - None for this RSS/social/GTM/Reddit pass.
 
+## Repo: assafkip/ti-weekly-agent
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/ti-weekly-agent-inspect`
+
+What it does:
+
+- Private threat-intelligence monitoring agent for public Telegram and Discord sources.
+- Ingests messages, stores them in SQLite, analyzes fraud signals, and produces weekly reports.
+
+GitHub state seen:
+
+- Private repo.
+- Default branch: `main`.
+- No open PRs before this sweep.
+- No open issues.
+- No GitHub Actions runs were exposed by `gh run list`.
+- Latest pushed commit seen in shallow clone: `95bb8f4` - `feat(discover): --invites mode`
+
+Aggregator scan:
+
+- Searched for Reddit, RSS, LinkedIn, Twitter, X, social, GTM, feed, Apify, PullPush, Arctic, workflow dispatch, schedule, and cron markers.
+- No Reddit source or Reddit collector path was found.
+- No RSS collector path was found.
+- The live social ingestion paths are Telegram and Discord, not the broken Reddit mechanism.
+- Twitter/X references are documentation and IOC examples, not an active collector path.
+- The repo has a local weekly launchd schedule in `deploy/com.purespectrum.ti-weekly.plist`; no GitHub daily cron was found.
+
+Decision:
+
+- No Reddit migration needed.
+- No daily schedule pause needed.
+- Repo did need a small health update because the standard dev test extra could not run the full suite from a fresh environment.
+
+Changes made:
+
+- Branch: `codex/fix-dev-proxy-extra`
+- Fix commit: `5d5927c` - include `pysocks` in the `dev` optional dependency group.
+- RCA metadata commit: `869e295` - record the fix commit in the RCA.
+- Draft PR: `https://github.com/assafkip/ti-weekly-agent/pull/1`
+- PR status at creation: mergeable, no checks reported.
+
+Files changed:
+
+- `pyproject.toml`
+- `uv.lock`
+- `rca/rca-dev-proxy-extra-2026-07-01.md`
+
+Verification:
+
+- Initial repro:
+  - `PYTHONPATH=. uv run --extra dev python -m pytest tests -q`
+  - Result: failed 3 proxy tests with `ModuleNotFoundError: No module named 'socks'`.
+- Focused proxy tests after fix:
+  - `PYTHONPATH=. uv run --extra dev python -m pytest tests/test_telegram_ingester.py::TestGetTelegramProxy -q`
+  - Result: 4 passed.
+- Lockfile check:
+  - `uv lock --check`
+  - Result: resolved cleanly.
+- Full suite after fix:
+  - `PYTHONPATH=. uv run --extra dev python -m pytest tests -q`
+  - Result: 358 passed, 169 warnings.
+
+Remaining work:
+
+- Review and merge PR `#1`.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/facebook-ads-library-search`
+- `assafkip/ti-weekly-agent`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/ti-weekly-agent`
+- `assafkip/ktlyst-strategy`
 
 Current global open loop:
 
@@ -725,6 +793,7 @@ Current global open loop:
 - `assafkip/kipi-system` CI fix: `https://github.com/assafkip/kipi-system/pull/4`
 - `assafkip/design-room` canonical ledger: `https://github.com/assafkip/design-room/pull/1`
 - `assafkip/kipi-accountant` Reddit migration: `https://github.com/assafkip/kipi-accountant/pull/1`
+- `assafkip/ti-weekly-agent` dev proxy dependency fix: `https://github.com/assafkip/ti-weekly-agent/pull/1`
 
 ## Verification Index
 
@@ -747,10 +816,13 @@ Current global open loop:
 - `kipi-accountant`: harvest orchestrator tests passed, 11 tests.
 - `kipi-accountant`: broad Kipi MCP suite passed with stale integration harness excluded, 661 tests.
 - `facebook-ads-library-search`: pytest suite passed, 5 tests.
+- `ti-weekly-agent`: focused proxy tests passed, 4 tests.
+- `ti-weekly-agent`: lockfile check passed.
+- `ti-weekly-agent`: full pytest suite passed, 358 tests.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/ti-weekly-agent`.
+- Inspect `assafkip/ktlyst-strategy`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
