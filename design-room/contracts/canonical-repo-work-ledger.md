@@ -1111,15 +1111,44 @@ Remaining work:
 
 - None for the current freshness pass.
 
+## assafkip/compute-gardening
+
+Repository:
+
+- GitHub: `https://github.com/assafkip/compute-gardening`
+- Status: not found through `gh` on 2026-07-01.
+- Local inspection path: none found.
+
+Decision:
+
+- Treat this as a stale, deleted, renamed, or inaccessible cursor entry.
+- No Reddit, RSS, GTM, or social aggregator review could be performed because the repo does not resolve.
+- Move to the next real repo in the current GitHub list.
+
+Changes made:
+
+- None to `assafkip/compute-gardening`.
+
+Verification:
+
+- `gh repo view assafkip/compute-gardening` failed with repository not found.
+- `gh pr list --repo assafkip/compute-gardening` failed with repository not found.
+- `gh issue list --repo assafkip/compute-gardening` failed with repository not found.
+- No local folder matched `compute` or `garden` under `/Users/assafkipnis/projects`.
+
+Remaining work:
+
+- None unless founder identifies a renamed repo.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/prd-os`
+- `assafkip/compute-gardening`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/compute-gardening`
+- `assafkip/claude-say`
 
 Current global open loop:
 
@@ -1178,10 +1207,11 @@ Current global open loop:
 - `prd-os`: default-branch pytest passed, 192 passed, 1 skipped.
 - `prd-os`: PR `#1` pytest passed, 247 passed, 2 skipped.
 - `prd-os`: PR `#1` init, build, and map status smoke passed.
+- `compute-gardening`: GitHub repo, PR, and issue lookups failed with repository not found.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/compute-gardening`.
+- Inspect `assafkip/claude-say`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
