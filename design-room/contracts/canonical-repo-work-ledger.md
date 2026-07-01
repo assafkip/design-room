@@ -850,15 +850,109 @@ Remaining work:
 - Decide later whether to add CRM export targets.
 - Decide later whether this should become public.
 
+## Repo: assafkip/ktlyst-strategy
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/ktlyst-strategy-inspect`
+
+What it does:
+
+- Private KTLYST strategy, positioning, marketing, and GTM system.
+- Contains an embedded `q-ktlyst/vc-sourcing` area with VC/RSS/social signal monitoring assets.
+- This repo was the source of the product idea that became `assafkip/signal-desk`.
+
+GitHub state seen:
+
+- Private repo.
+- Default branch: `main`.
+- Open PR at inspection time:
+  - `#5` - `canonical: align with product-baseline audit findings 2026-05-18`
+  - PR target branch was `fix/pe7-script-lookup-mark-josh`, not `main`.
+- No open issues.
+- No GitHub Actions runs were exposed by `gh run list`.
+- Latest pushed commit seen in shallow clone: `d88f8c1` - `warm-graph: audit 2026-06-26`
+
+Aggregator scan:
+
+- Found embedded VC sourcing monitor code:
+  - `q-ktlyst/vc-sourcing/scripts/live_monitor.py`
+  - `q-ktlyst/vc-sourcing/scripts/daily_signal_monitor.py`
+  - `q-ktlyst/vc-sourcing/seed-materials/feeds.yaml`
+  - `q-ktlyst/vc-sourcing/docs/DAILY_MONITORING_SETUP.md`
+- `live_monitor.py` is RSS-based and resembles the older `vc-signals` monitor shape.
+- No Reddit collector path was found.
+- No Arctic or PullPush path was present in this repo before `signal-desk`.
+- LinkedIn and X/Twitter references exist mostly as manual workflows, docs, seed data, or extractor scripts.
+
+Schedule and automation status:
+
+- No GitHub Actions schedule found.
+- `daily_signal_monitor.py` includes a daily cron comment.
+- `DAILY_MONITORING_SETUP.md` tells the operator to install a daily cron job.
+- Shell wrappers found:
+  - `q-ktlyst/vc-sourcing/scripts/hourly_vc_feeds.sh`
+  - `q-ktlyst/vc-sourcing/scripts/daily_vc_summaries.sh`
+- Those wrappers point to script names that are missing from this repo:
+  - `vc_feed_monitor.py`
+  - `security_monitor.py`
+  - `telegram_monitor.py`
+  - `apify_signal_scraper.py`
+  - `cleanup_old_signals.py`
+  - `generate_vc_summaries.py`
+  - `generate_security_summaries.py`
+  - `sync_to_website.sh`
+
+Decision:
+
+- Do not patch this repo yet without founder direction.
+- No Reddit rip-and-replace needed unless a different branch contains a Reddit collector.
+- Treat VC sourcing cleanup as a separate productization/refactor track.
+- Productized the generalized version into new repo `assafkip/signal-desk`.
+
+Changes made:
+
+- None in `ktlyst-strategy`.
+
+Verification:
+
+- Python compile:
+  - `python3 -m py_compile q-ktlyst/vc-sourcing/scripts/live_monitor.py q-ktlyst/vc-sourcing/scripts/daily_signal_monitor.py`
+  - Result: passed.
+- Root pytest without extra deps:
+  - `python3 -m pytest tests -q`
+  - Result: failed during collection because `jsonschema` was not installed.
+- Root pytest with explicit deps:
+  - `uv run --with pytest --with jsonschema python -m pytest tests -q`
+  - Result: 289 passed, 42 failed, 1 skipped.
+- Main failure classes:
+  - stale cutoff registry expectation.
+  - tests expecting missing `q-ktlyst/.q-system/scripts/issue-findings.py`.
+  - issue runner API drift.
+  - PRD manifest tests expecting older behavior.
+  - website path test expecting an external `website/public/signals` directory.
+
+Local cleanup note:
+
+- Test runs created generated `__pycache__` files in the inspection checkout.
+- Attempted cleanup was blocked by the destructive-op hook because it used a blocked removal command.
+- No source files were changed in this repo.
+
+Remaining work:
+
+- Founder direction needed before cleaning stale cron docs or broken shell wrappers.
+- Decide whether `q-ktlyst/vc-sourcing` should stay here now that `signal-desk` exists.
+- Decide whether to fix root test harness drift in this repo.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/signal-desk`
+- `assafkip/ktlyst-strategy`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/ktlyst-strategy`
+- `assafkip/kipi-investigations`
 
 Current global open loop:
 
@@ -910,10 +1004,12 @@ Current global open loop:
 - `signal-desk`: unit test suite passed, 9 tests.
 - `signal-desk`: manual sample scan wrote ranked Markdown actions.
 - `signal-desk`: product cleanup scan found no KTLYST, catalyst, CISO, security positioning, or active scheduler config.
+- `ktlyst-strategy`: VC sourcing monitor scripts compiled.
+- `ktlyst-strategy`: root pytest has known harness drift, 42 failed, 289 passed, 1 skipped with explicit deps.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/ktlyst-strategy`.
+- Inspect `assafkip/kipi-investigations`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
