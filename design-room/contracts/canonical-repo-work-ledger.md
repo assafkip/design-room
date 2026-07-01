@@ -468,15 +468,62 @@ Remaining work:
 
 - Keep appending repo findings to this ledger as the sweep continues.
 
+## Repo: assafkip/interview-coach
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/interview-coach-inspect`
+
+What it does:
+
+- Claude Code interview coach.
+- Runs mock interview practice, scores answers against cited techniques, and tracks weaknesses across sessions.
+
+GitHub state seen:
+
+- Public repo.
+- Default branch: `master`.
+- No open PRs.
+- No open issues.
+- No GitHub Actions runs were exposed by `gh run list`.
+- Latest pushed commit seen in shallow clone: `8145437` - Add claudedaddy funnel footer
+
+Aggregator scan:
+
+- Searched for Reddit, RSS, LinkedIn, Twitter, X, social, GTM, feed, Apify, PullPush, Arctic, workflow dispatch, schedule, and cron markers.
+- No Reddit, RSS, social-media, GTM, Apify, Arctic, or PullPush collector path was found.
+- Matches were ordinary interview-coach text, mostly feedback language and example content.
+
+Decision:
+
+- No Reddit migration needed.
+- No schedule pause needed.
+- Record as inspected and continue the repo sweep.
+
+Changes made:
+
+- None.
+
+Verification:
+
+- `python3 test_score_answer.py`
+- Result: passed.
+- `python3 test_goal_tracker.py`
+- Result: passed.
+
+Remaining work:
+
+- None for this RSS/social/GTM/Reddit pass.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/design-room`
+- `assafkip/interview-coach`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/interview-coach`
+- `assafkip/Pure-spectrum-Q`
 
 Current global open loop:
 
@@ -513,10 +560,12 @@ Current global open loop:
 - `kipi-system`: `validate-separation.py 1 --verbose` passed after CI fix.
 - `kipi-system`: PR `#4` GitHub check `validate` passed.
 - `design-room`: scripts test suite passed, 58 tests.
+- `interview-coach`: score-answer test passed.
+- `interview-coach`: goal-tracker test passed.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/interview-coach`.
+- Inspect `assafkip/Pure-spectrum-Q`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
