@@ -1154,7 +1154,9 @@ Decision:
 
 - Founder skipped this repo as a standalone repo pass.
 - It was still used as the comparison source for `assafkip/claude-voice`.
-- Treat this as the current baked fleet operation for the voice command.
+- Correction on 2026-07-01: do not treat this as the same thing as `claude-voice`.
+- `claude-say` is a separate public Claude Code plugin with manual playback and setup flow.
+- The fleet comparison source for `claude-voice` is closer to `kipi-core` `/say`, not `claude-say`.
 
 Current operation:
 
@@ -1194,7 +1196,7 @@ Verification:
 
 Remaining work:
 
-- None unless founder wants to modify the current baked operation.
+- None unless founder wants to modify the separate `claude-say` plugin.
 
 ## assafkip/claude-voice
 
@@ -1216,41 +1218,57 @@ GitHub state:
 Repo role:
 
 - This is not a Reddit, RSS, GTM, or social aggregator repo.
-- It is an older `/say` command implementation for Claude Code.
-- It overlaps directly with `assafkip/claude-say`.
+- It is the public standalone version of the autoplay `/say` command for Claude Code.
+- It overlaps with both:
+  - `kipi-core` `/say`, which is the fleet/internal plugin operation.
+  - `claude-say`, which is a separate public plugin operation with manual playback.
 
 Freshness findings:
 
-- `claude-voice` is not aligned with the current baked fleet operation.
-- It uses the older project-local install model:
+- Correction on 2026-07-01: previous ledger entry over-collapsed `claude-voice` and `claude-say`.
+- They are related TTS slash-command repos, but they are not the same operation.
+- `claude-voice` is close to `kipi-core` `/say` behavior:
+  - OpenAI TTS.
+  - Stable mp3 path.
+  - Local autoplay in a real Terminal window through `open`.
+  - `--no-play` fallback.
+  - Over-SSH manual playback command.
+  - Unknown-arg guard before synthesis.
+- `claude-voice` differs from `kipi-core` `/say` in packaging and namespace:
   - `.claude/commands/say.md`
   - `scripts/say-last-response.py`
   - README curl-copy install instructions.
-- It uses the older config namespace:
   - `~/.config/claude-voice/openai-key`
   - `~/.config/claude-voice/say-last.mp3`
   - `SAY_TTS_MODEL`
   - `SAY_TTS_VOICE`
-- It still auto-plays from Claude by opening a Terminal window on macOS when possible.
-- It has no plugin metadata, no setup script, no playback helper, and no tests.
-- `claude-say` is the baked version now:
-  - plugin install
-  - secure key setup
-  - manual play command
-  - `CLAUDE_SAY_*` env vars
+- `kipi-core` uses:
+  - `plugins/kipi-core/commands/say.md`
+  - `plugins/kipi-core/scripts/say-last-response.py`
+  - `plugins/kipi-core/scripts/say-play.sh`
+  - `~/.config/kipi/openai-key`
+  - `~/.config/kipi/say-last.mp3`
+  - `KIPI_TTS_MODEL`
+  - `KIPI_TTS_VOICE`
+  - `KIPI_SAY_HOST`
+- `claude-say` is different from both:
+  - plugin marketplace metadata
+  - manual playback by default
+  - setup script
   - `~/.config/claude-say`
-  - regression smoke for unknown args before paid API calls
+  - `CLAUDE_SAY_*`
 
 Decision:
 
-- Do not treat `claude-voice` as fully baked.
-- It needs a founder decision before code changes because there are three plausible cleanup paths.
+- Do not redirect or replace `claude-voice` with `claude-say` based on the previous comparison.
+- Current likely question: should `claude-voice` be refreshed to match the `kipi-core` `/say` operation while staying its own standalone public repo?
+- It needs founder direction before code changes.
 
 Cleanup options:
 
-- Option 1: archive or deprecate `claude-voice` and point users to `claude-say`.
-- Option 2: convert `claude-voice` into a thin redirect repo with README, no runnable duplicate implementation.
-- Option 3: port the full `claude-say` operation into `claude-voice`, keeping the old repo name but replacing the internals.
+- Option 1: keep `claude-voice` standalone, but refresh it against `kipi-core` `/say` behavior and add parity tests.
+- Option 2: keep `claude-voice` as the lightweight public autoplay command and only fix clear gaps, such as tests or docs.
+- Option 3: leave `claude-voice` alone and continue treating `kipi-core` as the fleet version.
 
 Changes made:
 
@@ -1260,6 +1278,9 @@ Verification:
 
 - `python3 -m py_compile scripts/say-last-response.py` passed.
 - `python3 scripts/say-last-response.py --help` passed.
+- Compared `claude-voice` script and command against `kipi-core` `/say`.
+- Compared `claude-voice` script and command against `claude-say`.
+- Local fleet search found Kipi-core copies of `/say` in inspected Kipi-family repos.
 - No Reddit, RSS, GTM, Apify, social collector, schedule, cron, or workflow surface found.
 
 Remaining work:
