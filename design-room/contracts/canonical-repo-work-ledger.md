@@ -451,6 +451,10 @@ Decision:
 Changes made:
 
 - Added `design-room/contracts/canonical-repo-work-ledger.md`.
+- Branch: `codex/canonical-repo-work-ledger`
+- Commit: `421d259` - docs: add canonical repo work ledger
+- PR: `https://github.com/assafkip/design-room/pull/1`
+- PR state: draft
 
 Verification:
 
@@ -462,7 +466,7 @@ Verification:
 
 Remaining work:
 
-- Commit and open PR for the ledger file.
+- Keep appending repo findings to this ledger as the sweep continues.
 
 ## Current Sweep Cursor
 
@@ -491,6 +495,8 @@ Current global open loop:
 - `assafkip/competitive-analysis` Reddit migration: `https://github.com/assafkip/competitive-analysis/pull/1`
 - `assafkip/notebooklm-daily-podcast` Reddit migration: `https://github.com/assafkip/notebooklm-daily-podcast/pull/1`
 - `assafkip/random-stuff-ideas` Reddit migration: `https://github.com/assafkip/random-stuff-ideas/pull/2`
+- `assafkip/kipi-system` CI fix: `https://github.com/assafkip/kipi-system/pull/4`
+- `assafkip/design-room` canonical ledger: `https://github.com/assafkip/design-room/pull/1`
 
 ## Verification Index
 
