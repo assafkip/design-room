@@ -1029,15 +1029,94 @@ Remaining work:
 - Decide whether to inspect or merge PR `#6`.
 - Decide whether to debug the old failing dependency graph run.
 
+## assafkip/prd-os
+
+Repository:
+
+- GitHub: `https://github.com/assafkip/prd-os`
+- Visibility: public
+- Default branch: `master`
+- Local inspection path: `/Users/assafkipnis/projects/_codex-worktrees/prd-os-inspect`
+- Latest default-branch commit inspected: `afee6af` - `Point store-hub link to claudedaddy.io`
+- Description: standalone PRD plus DSSE execution plugin for Claude Code.
+
+GitHub state:
+
+- Open issues: none.
+- GitHub Actions runs: none found.
+- Open PR:
+  - PR `#1`: `https://github.com/assafkip/prd-os/pull/1`
+  - Title: `Add design-doc PRD sections + cross-PRD findings xref; fix bootstrap gaps`
+  - Head: `feat/prd-os-design-sections-xref-bootstrap`
+  - Base: `master`
+  - Status: mergeable, not draft, no checks configured.
+  - Size: 23 changed files locally after fetch, 2,168 additions, 41 deletions in the inspected diff.
+
+Repo role:
+
+- This is not an RSS, social media, GTM, or Reddit aggregator repo.
+- It is infrastructure for writing, reviewing, triaging, mapping, and archiving PRDs.
+- No Reddit rip-and-replace is needed.
+
+Freshness findings:
+
+- `master` is healthy.
+- PR `#1` is the pending freshness update.
+- PR `#1` adds:
+  - `/prd-map` facts-only codebase mapping.
+  - `/prd-os-init` bootstrap command.
+  - `prd-archive.md` command doc.
+  - deterministic cross-PRD findings xref.
+  - PRD template decision sections.
+  - issue runner default path alignment.
+  - `.gitignore` exclusions for `.prd-os/` and `.claude/`.
+- `gh pr checkout 1` fetched the branch but failed local tracking setup, then left the PR patch staged on `master` in the inspection clone.
+- No commit or push was made from the inspection clone.
+
+Decision:
+
+- Treat PR `#1` as the repo's real freshness update.
+- It is ready for founder merge decision based on local verification.
+- Do not create a separate freshness branch unless PR `#1` needs changes.
+
+Changes made:
+
+- None to `assafkip/prd-os`.
+
+Verification:
+
+- Current `master` test suite:
+  - `python3 -m pytest plugins/prd-os/tests -q`
+  - Result: 192 passed, 1 skipped.
+- PR `#1` test suite:
+  - `python3 -m pytest plugins/prd-os/tests -q`
+  - Result: 247 passed, 2 skipped.
+- PR `#1` marker scan:
+  - No Reddit, RSS, GTM, Apify, social collector, schedule, cron, or workflow surface found.
+  - Hits were intentional TODO/FIXME counting in the new map command tests and schema, plus existing prompt wording.
+- Bootstrap smoke:
+  - `python3 plugins/prd-os/scripts/prd_os_init.py --repo-root .`
+  - Result: initialized `.prd-os/config.json`.
+- Codebase map smoke:
+  - `python3 plugins/prd-os/scripts/prd_map_runner.py build --force`
+  - Result: wrote `.prd-os/codebase-map.json` and `.prd-os/codebase-map.md`.
+  - `python3 plugins/prd-os/scripts/prd_map_runner.py status`
+  - Result: `stale: false`.
+
+Remaining work:
+
+- Founder decision: merge PR `#1` as the freshness update, or leave it open.
+- If merged, re-run the test suite on `master` after merge.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/kipi-investigations`
+- `assafkip/prd-os`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/prd-os`
+- `assafkip/compute-gardening`
 
 Current global open loop:
 
@@ -1061,6 +1140,7 @@ Current global open loop:
 - `assafkip/kipi-accountant` Reddit migration: `https://github.com/assafkip/kipi-accountant/pull/1`
 - `assafkip/ti-weekly-agent` dev proxy dependency fix: `https://github.com/assafkip/ti-weekly-agent/pull/1`
 - `assafkip/signal-desk` new private repo: `https://github.com/assafkip/signal-desk`
+- `assafkip/prd-os` freshness update: `https://github.com/assafkip/prd-os/pull/1`
 
 ## Verification Index
 
@@ -1092,10 +1172,13 @@ Current global open loop:
 - `ktlyst-strategy`: VC sourcing monitor scripts compiled.
 - `ktlyst-strategy`: root pytest has known harness drift, 42 failed, 289 passed, 1 skipped with explicit deps.
 - `kipi-investigations`: agent tool coverage test passed, 5 tests.
+- `prd-os`: default-branch pytest passed, 192 passed, 1 skipped.
+- `prd-os`: PR `#1` pytest passed, 247 passed, 2 skipped.
+- `prd-os`: PR `#1` init, build, and map status smoke passed.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/prd-os`.
+- Inspect `assafkip/compute-gardening`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
