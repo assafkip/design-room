@@ -763,11 +763,98 @@ Remaining work:
 
 - Review and merge PR `#1`.
 
+## Repo: assafkip/signal-desk
+
+Local path:
+
+- `/Users/assafkipnis/projects/signal-desk`
+
+What it does:
+
+- Clean MVP repo for generalized GTM signal intelligence.
+- Turns public source signals into ranked outreach actions.
+- Answers: who to contact, why now, and what to say.
+
+Product scope:
+
+- Manual scan command only.
+- CSV target list.
+- YAML source list.
+- RSS collector.
+- Reddit archive collector.
+- Ranked actions with reason, angle, draft starter, and source link.
+- Markdown and JSON output.
+
+Lineage:
+
+- Extracted from the useful GTM and VC sourcing patterns found inside `assafkip/ktlyst-strategy`.
+- RSS collection pattern aligned with the working `vc-signals` monitor shape.
+- Reddit collector aligned with the fleet standard from `reddit-build-radar` and `vc-signals`:
+  - Arctic Shift first.
+  - PullPush fallback.
+- Generalized away from KTLYST, security, CISO, founder-specific, and catalyst positioning.
+
+GitHub state:
+
+- Private repo.
+- Default branch: `main`.
+- Repo URL: `https://github.com/assafkip/signal-desk`
+- Initial commit: `ce4464d` - `initial signal desk mvp`
+- No PR used because this was a new repo initial push.
+
+Files created:
+
+- `README.md`
+- `docs/product.md`
+- `examples/targets.csv`
+- `examples/sources.yaml`
+- `examples/reddit-source.yaml`
+- `examples/demo-feed.xml`
+- `src/signal_desk/cli.py`
+- `src/signal_desk/collectors.py`
+- `src/signal_desk/config.py`
+- `src/signal_desk/models.py`
+- `src/signal_desk/ranker.py`
+- `src/signal_desk/render.py`
+- `tests/test_cli.py`
+- `tests/test_collectors.py`
+- `tests/test_config.py`
+- `tests/test_ranker.py`
+
+Schedule and automation status:
+
+- No cron.
+- No launchd plist.
+- No GitHub Actions workflow.
+- No daily automation.
+- Runs only when manually invoked.
+
+Verification:
+
+- Unit tests:
+  - `uv run --extra dev python -m pytest tests -q`
+  - Result: 9 passed.
+- Manual sample scan:
+  - `uv run --extra dev signal-desk scan --targets examples/targets.csv --sources examples/sources.yaml --output out/actions.md --limit 5`
+  - Result: wrote ranked Markdown actions.
+- Product cleanup scan:
+  - `rg -n "KTLYST|catalyst|CISO|security|cron job|crontab|launchd|workflow_dispatch|schedule:" -S README.md docs src examples tests pyproject.toml || true`
+  - Result: no KTLYST, catalyst, CISO, security positioning, or active scheduler config found.
+- Formatting guard:
+  - Ran local formatting guard for disallowed dash and arrow characters across README, docs, source, examples, tests, and package config.
+  - Result: no disallowed dash/arrow characters found.
+
+Remaining work:
+
+- Decide later whether to add a small web dashboard.
+- Decide later whether to add CRM export targets.
+- Decide later whether this should become public.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/ti-weekly-agent`
+- `assafkip/signal-desk`
 
 Next repo to inspect in the original GitHub repo sweep:
 
@@ -794,6 +881,7 @@ Current global open loop:
 - `assafkip/design-room` canonical ledger: `https://github.com/assafkip/design-room/pull/1`
 - `assafkip/kipi-accountant` Reddit migration: `https://github.com/assafkip/kipi-accountant/pull/1`
 - `assafkip/ti-weekly-agent` dev proxy dependency fix: `https://github.com/assafkip/ti-weekly-agent/pull/1`
+- `assafkip/signal-desk` new private repo: `https://github.com/assafkip/signal-desk`
 
 ## Verification Index
 
@@ -819,6 +907,9 @@ Current global open loop:
 - `ti-weekly-agent`: focused proxy tests passed, 4 tests.
 - `ti-weekly-agent`: lockfile check passed.
 - `ti-weekly-agent`: full pytest suite passed, 358 tests.
+- `signal-desk`: unit test suite passed, 9 tests.
+- `signal-desk`: manual sample scan wrote ranked Markdown actions.
+- `signal-desk`: product cleanup scan found no KTLYST, catalyst, CISO, security positioning, or active scheduler config.
 
 ## Canonical Next-Step Checklist
 
