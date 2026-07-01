@@ -944,15 +944,100 @@ Remaining work:
 - Decide whether `q-ktlyst/vc-sourcing` should stay here now that `signal-desk` exists.
 - Decide whether to fix root test harness drift in this repo.
 
+## Repo: assafkip/kipi-investigations
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/kipi-investigations-inspect`
+
+What it does:
+
+- Private local-first OSINT and investigation product.
+- Turns reports, PDFs, screenshots, spreadsheets, and notes into a typed entity graph.
+- Includes local graph analytics, entity extraction, enrichment providers, investigator chat, reports, and a browser UI.
+- Includes a client-side `kipi-web` app and a Python investigation backend.
+
+GitHub state seen:
+
+- Private repo.
+- Default branch: `feat/prd-rollout`.
+- Open PR at inspection time:
+  - `#6` - `feat: analyst-driven expansion (+ cumulative work line integration)`
+  - Head: `feat/analyst-driven-expansion`
+  - Base: `feat/prd-rollout`
+  - Status: mergeable, no checks reported.
+  - Size: 803 files, 82,004 additions, 1,945 deletions.
+- No open issues.
+- Latest workflow run exposed by `gh run list`:
+  - `Graph Update: uv in /., /plugins/kipi-core/kipi-mcp #1394382577`
+  - Created: 2026-06-02.
+  - Conclusion: failure.
+- Latest pushed commit seen in shallow clone: `7d5ad4b` - `fix(kipi-web): a new user with no case can reach + use the global key pages (the left-nav trap)`
+
+Aggregator scan:
+
+- This is not an RSS/GTM aggregator repo.
+- It is an OSINT product that can use social and web enrichment tools during investigations.
+- Reddit appears as:
+  - MCP read-tool permissions for the investigator agent.
+  - username/profile presence checks.
+  - OSINT references and templates.
+- No broken Reddit feed collector was found.
+- No Reddit RSS or direct Reddit `/hot.json` collector path was found.
+- No Arctic/PullPush migration was needed for this repo.
+
+Relevant code paths:
+
+- `investigations/agent/investigator.py`
+- `investigations/agent/osint_mcp.py`
+- `investigations/enrich/username.py`
+- `investigations/tests/test_agent_tool_coverage.py`
+- `kipi-web/package.json`
+- `requirements.txt`
+- `q-investigate/skills/osint/`
+
+Schedule and automation status:
+
+- No GitHub Actions workflow files found in the checkout.
+- Found one local plist:
+  - `q-system/.q-system/scripts/com.kipi.openloops-heartbeat.plist`
+- No daily Reddit/RSS schedule was found.
+
+Decision:
+
+- No Reddit rip-and-replace needed.
+- Do not debug old dependency graph failure unless founder asks.
+- Do not touch huge open PR `#6` without direction.
+- Record as mapped and wait for founder direction.
+
+Changes made:
+
+- None.
+
+Verification:
+
+- Focused Reddit/Apify agent-tool wiring test:
+  - `uv run --with-requirements requirements.txt python -m pytest investigations/tests/test_agent_tool_coverage.py -q`
+  - Result: 5 passed.
+- First attempt with only pytest failed because app dependencies were missing:
+  - missing module: `dns`
+  - resolved by running with `requirements.txt`.
+
+Remaining work:
+
+- Founder direction needed for whether this repo is product, internal tool, or both.
+- Decide whether to inspect or merge PR `#6`.
+- Decide whether to debug the old failing dependency graph run.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/ktlyst-strategy`
+- `assafkip/kipi-investigations`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/kipi-investigations`
+- `assafkip/prd-os`
 
 Current global open loop:
 
@@ -1006,10 +1091,11 @@ Current global open loop:
 - `signal-desk`: product cleanup scan found no KTLYST, catalyst, CISO, security positioning, or active scheduler config.
 - `ktlyst-strategy`: VC sourcing monitor scripts compiled.
 - `ktlyst-strategy`: root pytest has known harness drift, 42 failed, 289 passed, 1 skipped with explicit deps.
+- `kipi-investigations`: agent tool coverage test passed, 5 tests.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/kipi-investigations`.
+- Inspect `assafkip/prd-os`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
