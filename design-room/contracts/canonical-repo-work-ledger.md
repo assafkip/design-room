@@ -566,15 +566,98 @@ Remaining work:
 - Decide separately whether to review or merge PR `#1`.
 - None for this RSS/social/GTM/Reddit pass.
 
+## Repo: assafkip/kipi-accountant
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/kipi-accountant-inspect`
+
+What it does:
+
+- Private personal finance/accounting app and Q-system instance.
+- Includes a Tauri app, finance provider code, Q-system content, and a Kipi MCP harvest plugin.
+
+GitHub state seen:
+
+- Private repo.
+- Default branch: `master`.
+- No open PRs before this pass.
+- No open issues.
+- Latest exposed workflow: `Dependency Graph`, success on 2026-06-29.
+- Latest pushed commit seen before patch: 2026-06-30 on `master`.
+
+Aggregator scan:
+
+- Full-text scan found many Q-system marketing templates and source configs mentioning Reddit, LinkedIn, X, RSS, and social workflows.
+- Live source configs existed under `plugins/kipi-core/kipi-mcp/sources/`.
+- Two Reddit sources were live and used the broken Reddit MCP mechanism:
+  - `reddit-leads.yaml`
+  - `reddit-subs.yaml`
+- Both used:
+  - `method: mcp`
+  - `server: reddit`
+  - `tool: fetch_hot_threads`
+
+Decision:
+
+- Migrate the live Reddit source manifests off the Reddit MCP path.
+- Keep existing source names, environment-driven subreddit configuration, full-text output, and schedule metadata.
+- Add a repo-local `reddit_archive` source method that executes in Python.
+
+Reddit change:
+
+- Branch: `codex/reddit-arctic-sources`
+- Commit: `bf2423b` - fix: use archive Reddit sources
+- PR: `https://github.com/assafkip/kipi-accountant/pull/1`
+- PR state: draft
+- GitHub checks: none reported on the branch.
+
+Files changed:
+
+- `plugins/kipi-core/kipi-mcp/sources/reddit-leads.yaml`
+- `plugins/kipi-core/kipi-mcp/sources/reddit-subs.yaml`
+- `plugins/kipi-core/kipi-mcp/src/kipi_mcp/source_registry.py`
+- `plugins/kipi-core/kipi-mcp/src/kipi_mcp/harvest_orchestrator.py`
+- `plugins/kipi-core/kipi-mcp/src/kipi_mcp/executors/reddit_archive_executor.py`
+- `plugins/kipi-core/kipi-mcp/tests/test_source_registry.py`
+- `plugins/kipi-core/kipi-mcp/tests/test_reddit_archive_executor.py`
+
+Verification:
+
+- Targeted Reddit/schema tests:
+  - `PYTHONPATH=src uv run --with pytest --with pytest-asyncio --with httpx --with pyyaml --with pydantic --with tenacity --with feedparser python -m pytest tests/test_reddit_archive_executor.py tests/test_source_registry.py -q`
+  - Result: 25 passed.
+- Python compile:
+  - `PYTHONPATH=src python3 -m py_compile src/kipi_mcp/source_registry.py src/kipi_mcp/harvest_orchestrator.py src/kipi_mcp/executors/reddit_archive_executor.py tests/test_reddit_archive_executor.py tests/test_source_registry.py`
+  - Result: passed.
+- Harvest orchestrator tests:
+  - `PYTHONPATH=src uv run --with pytest --with pytest-asyncio --with httpx --with pyyaml --with pydantic --with tenacity --with feedparser python -m pytest tests/test_harvest_orchestrator.py -q`
+  - Result: 11 passed.
+- Broad suite excluding known stale integration harness:
+  - `PYTHONPATH=src uv run --with pytest --with pytest-mock --with pytest-asyncio --with httpx --with pyyaml --with pydantic --with tenacity --with feedparser --with apify-client --with google-analytics-data --with google-auth python -m pytest tests -q --ignore=tests/test_server_integration.py`
+  - Result: 661 passed.
+
+Known existing harness drift:
+
+- Full Kipi MCP suite still fails in `tests/test_server_integration.py`.
+- Failure 1: hardcoded cwd `/Users/ike/code/kipi-system/kipi-mcp` does not exist here.
+- Failure 2: expected tool count is stale by 3 LinkedIn tools.
+- These failures are unrelated to the Reddit archive source change.
+
+Remaining work:
+
+- Decide separately whether to fix the stale integration harness.
+- Review and merge PR `#1`.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/Pure-spectrum-Q`
+- `assafkip/kipi-accountant`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/kipi-accountant`
+- `assafkip/facebook-ads-library-search`
 
 Current global open loop:
 
@@ -595,6 +678,7 @@ Current global open loop:
 - `assafkip/random-stuff-ideas` Reddit migration: `https://github.com/assafkip/random-stuff-ideas/pull/2`
 - `assafkip/kipi-system` CI fix: `https://github.com/assafkip/kipi-system/pull/4`
 - `assafkip/design-room` canonical ledger: `https://github.com/assafkip/design-room/pull/1`
+- `assafkip/kipi-accountant` Reddit migration: `https://github.com/assafkip/kipi-accountant/pull/1`
 
 ## Verification Index
 
@@ -613,10 +697,13 @@ Current global open loop:
 - `design-room`: scripts test suite passed, 58 tests.
 - `interview-coach`: score-answer test passed.
 - `interview-coach`: goal-tracker test passed.
+- `kipi-accountant`: targeted Reddit/schema tests passed, 25 tests.
+- `kipi-accountant`: harvest orchestrator tests passed, 11 tests.
+- `kipi-accountant`: broad Kipi MCP suite passed with stale integration harness excluded, 661 tests.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/kipi-accountant`.
+- Inspect `assafkip/facebook-ads-library-search`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
