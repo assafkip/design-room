@@ -649,15 +649,61 @@ Remaining work:
 - Decide separately whether to fix the stale integration harness.
 - Review and merge PR `#1`.
 
+## Repo: assafkip/facebook-ads-library-search
+
+Local path:
+
+- `/Users/assafkipnis/projects/_codex-worktrees/facebook-ads-library-search-inspect`
+
+What it does:
+
+- Private ad-library search and normalization toolkit.
+- Captures public Meta Ad Library evidence and includes scaffolded TikTok, Google Ads, and X Ads Repository probes.
+
+GitHub state seen:
+
+- Private repo.
+- Default branch: `main`.
+- No open PRs.
+- No open issues.
+- No GitHub Actions runs were exposed by `gh run list`.
+- Latest pushed commit seen in shallow clone: `0a44326` - Add cross-platform ad detail enrichment
+
+Aggregator scan:
+
+- Searched for Reddit, RSS, LinkedIn, Twitter, X, social, GTM, feed, Apify, PullPush, Arctic, workflow dispatch, schedule, and cron markers.
+- The repo has collector-style scripts for Meta, TikTok, Google Ads, and X Ads Repository.
+- No Reddit source or Reddit collector path was found.
+- X/Twitter matches are for X Ads Repository capture, not the broken Reddit mechanism.
+
+Decision:
+
+- No Reddit migration needed.
+- No schedule pause needed.
+- Record as inspected and continue the repo sweep.
+
+Changes made:
+
+- None.
+
+Verification:
+
+- `python3 -m pytest tests -q`
+- Result: 5 passed.
+
+Remaining work:
+
+- None for this RSS/social/GTM/Reddit pass.
+
 ## Current Sweep Cursor
 
 Last active repo focus:
 
-- `assafkip/kipi-accountant`
+- `assafkip/facebook-ads-library-search`
 
 Next repo to inspect in the original GitHub repo sweep:
 
-- `assafkip/facebook-ads-library-search`
+- `assafkip/ti-weekly-agent`
 
 Current global open loop:
 
@@ -700,10 +746,11 @@ Current global open loop:
 - `kipi-accountant`: targeted Reddit/schema tests passed, 25 tests.
 - `kipi-accountant`: harvest orchestrator tests passed, 11 tests.
 - `kipi-accountant`: broad Kipi MCP suite passed with stale integration harness excluded, 661 tests.
+- `facebook-ads-library-search`: pytest suite passed, 5 tests.
 
 ## Canonical Next-Step Checklist
 
-- Inspect `assafkip/facebook-ads-library-search`.
+- Inspect `assafkip/ti-weekly-agent`.
 - Identify whether it is RSS, social, GTM, Reddit, or unrelated.
 - Record findings in this ledger before switching repos.
 - If it needs code work, create a scoped branch from the correct base.
